@@ -3,6 +3,7 @@ import React from 'react';
 import { Star, ShoppingCart } from 'lucide-react';
 import { Product } from '../data/products';
 import { Link } from 'react-router-dom';
+import { useToast } from '@/components/ui/use-toast';
 
 interface ProductCardProps {
   product: Product;
@@ -10,8 +11,47 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const { id, name, price, discountPrice, image, rating } = product;
+  const { toast } = useToast();
   
   const hasDiscount = discountPrice !== undefined;
+  
+  const addToCart = (e: React.MouseEvent) => {
+    e.preventDefault(); // Prevent navigating to product detail
+    e.stopPropagation();
+    
+    // Get existing cart items from localStorage
+    const cartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
+    
+    // Check if product is already in cart
+    const existingProduct = cartItems.find((item: any) => item.id === id);
+    
+    if (existingProduct) {
+      existingProduct.quantity += 1;
+      toast({
+        title: "Updated cart",
+        description: `Increased ${name} quantity to ${existingProduct.quantity}`,
+      });
+    } else {
+      // Add product to cart
+      cartItems.push({
+        id,
+        name,
+        price: discountPrice || price,
+        image,
+        quantity: 1
+      });
+      toast({
+        title: "Added to cart",
+        description: `${name} has been added to your cart`,
+      });
+    }
+    
+    // Save updated cart to localStorage
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    
+    // Dispatch event to update cart count
+    window.dispatchEvent(new Event('cartUpdated'));
+  };
   
   return (
     <div className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden animate-fade-in group">
@@ -45,7 +85,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                 <span className="text-lg font-bold text-gray-800">${price.toFixed(2)}</span>
               )}
             </div>
-            <button className="p-2 rounded-full bg-primary-light text-primary hover:bg-primary hover:text-white transition-colors">
+            <button 
+              onClick={addToCart}
+              className="p-2 rounded-full bg-primary-light text-primary hover:bg-primary hover:text-white transition-colors"
+            >
               <ShoppingCart size={18} />
             </button>
           </div>
