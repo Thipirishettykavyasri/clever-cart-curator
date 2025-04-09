@@ -37,7 +37,7 @@ const Login = () => {
         toast({
           variant: "destructive",
           title: "Login failed",
-          description: "Invalid email or password. Try user@example.com / password123",
+          description: "Invalid email or password.",
         });
       }
     }, 1000);
@@ -117,12 +117,6 @@ const Login = () => {
               >
                 {isLoading ? 'Signing in...' : 'Sign in'}
               </Button>
-            </div>
-            
-            <div className="mt-4 text-center text-sm">
-              <p className="text-gray-500">Demo credentials:</p>
-              <p className="text-gray-700 font-semibold">Email: user@example.com</p>
-              <p className="text-gray-700 font-semibold">Password: password123</p>
             </div>
           </form>
         </div>
