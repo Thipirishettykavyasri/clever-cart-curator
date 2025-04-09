@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { ShoppingCart, Heart } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import { Card, CardContent } from '@/components/ui/card';
+import ProductRecommendations from '../components/ProductRecommendations';
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -189,6 +190,9 @@ const ProductDetails = () => {
               </div>
             </div>
           </div>
+          
+          {/* Product Recommendations */}
+          <ProductRecommendations product={product} excludeId={product.id} />
         </div>
       </main>
       

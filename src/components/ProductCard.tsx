@@ -1,9 +1,10 @@
 
 import React from 'react';
 import { Star, ShoppingCart } from 'lucide-react';
-import { Product } from '../data/products';
+import { Product, getProductById } from '../data/products';
 import { Link, useNavigate } from 'react-router-dom';
 import { useToast } from '@/components/ui/use-toast';
+import { toast as sonnerToast } from 'sonner';
 
 interface ProductCardProps {
   product: Product;
@@ -41,10 +42,18 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         image,
         quantity: 1
       });
-      toast({
-        title: "Added to cart",
-        description: `${name} has been added to your cart`,
-      });
+      
+      // Show recommendations in a toast
+      sonnerToast(
+        "Added to cart",
+        `${name} has been added to your cart. Check out similar products!`,
+        {
+          action: {
+            label: "View Similar",
+            onClick: () => navigate(`/product/${id}`),
+          },
+        }
+      );
     }
     
     // Save updated cart to localStorage
