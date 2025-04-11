@@ -1,4 +1,3 @@
-
 export interface Product {
   id: number;
   name: string;
@@ -104,6 +103,98 @@ export const products: Product[] = [
     isFeatured: false,
     description: "Premium sound quality with advanced noise cancellation technology.",
     features: ["40hr Battery Life", "Premium Sound", "Comfortable Design", "Quick Charge"]
+  },
+  {
+    id: 9,
+    name: "Smart Fitness Tracker",
+    category: "Wearables",
+    price: 89.99,
+    discountPrice: 69.99,
+    image: "https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2068&q=80",
+    rating: 4.4,
+    isFeatured: false,
+    description: "Track your steps, heart rate, sleep quality and more with this advanced fitness tracker.",
+    features: ["Heart Rate Monitor", "Step Counter", "Sleep Tracking", "Water Resistant"]
+  },
+  {
+    id: 10,
+    name: "Gaming Mechanical Keyboard",
+    category: "Gaming",
+    price: 149.99,
+    image: "https://images.unsplash.com/photo-1595044426077-d36d9236d54a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    rating: 4.8,
+    isFeatured: true,
+    description: "Dominate your games with this high-performance mechanical keyboard with customizable RGB lighting.",
+    features: ["Mechanical Switches", "RGB Lighting", "Programmable Keys", "Anti-Ghosting"]
+  },
+  {
+    id: 11,
+    name: "WiFi Mesh System (3-Pack)",
+    category: "Smart Home",
+    price: 299.99,
+    discountPrice: 249.99,
+    image: "https://images.unsplash.com/photo-1558655146-9f40138edfeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2064&q=80",
+    rating: 4.7,
+    isFeatured: false,
+    description: "Eliminate WiFi dead zones with this powerful mesh network system. Cover up to 6,000 sq ft.",
+    features: ["Whole Home Coverage", "Easy Setup", "Parental Controls", "Guest Network"]
+  },
+  {
+    id: 12,
+    name: "Ultra HD Action Camera",
+    category: "Cameras",
+    price: 199.99,
+    image: "https://images.unsplash.com/photo-1613286117592-2bd6dd0fb05b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    rating: 4.5,
+    isFeatured: true,
+    description: "Capture stunning 4K videos and photos with this waterproof action camera. Perfect for adventures.",
+    features: ["4K Video", "Waterproof", "Image Stabilization", "Time-Lapse"]
+  },
+  {
+    id: 13,
+    name: "Smart Baby Monitor",
+    category: "Security",
+    price: 159.99,
+    discountPrice: 139.99,
+    image: "https://images.unsplash.com/photo-1555948402-c1745553e11c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    rating: 4.6,
+    isFeatured: false,
+    description: "Keep an eye on your baby with HD video, two-way audio, and sleep tracking features.",
+    features: ["HD Video", "Night Vision", "Temperature Monitoring", "Lullaby Player"]
+  },
+  {
+    id: 14,
+    name: "Digital Drawing Tablet",
+    category: "Creative",
+    price: 249.99,
+    image: "https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80",
+    rating: 4.3,
+    isFeatured: false,
+    description: "Unleash your creativity with this professional digital drawing tablet with pressure sensitivity.",
+    features: ["8192 Pressure Levels", "Wireless Connection", "Customizable Shortcuts", "Compatible with Major Art Software"]
+  },
+  {
+    id: 15,
+    name: "Portable Solar Charger",
+    category: "Accessories",
+    price: 59.99,
+    discountPrice: 49.99,
+    image: "https://images.unsplash.com/photo-1620827252031-225a1defcfc0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80",
+    rating: 4.2,
+    isFeatured: true,
+    description: "Charge your devices anywhere with this portable solar panel charger. Perfect for outdoor adventures.",
+    features: ["Fast Charging", "Waterproof", "Compact Design", "Multiple Ports"]
+  },
+  {
+    id: 16,
+    name: "Smart Coffee Maker",
+    category: "Kitchen",
+    price: 129.99,
+    image: "https://images.unsplash.com/photo-1534422646206-56c33f926071?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80",
+    rating: 4.5,
+    isFeatured: false,
+    description: "Brew your perfect cup of coffee from your smartphone. Schedule, customize, and monitor your coffee.",
+    features: ["Voice Control", "Scheduling", "Custom Brew Strength", "Keep Warm Feature"]
   }
 ];
 
