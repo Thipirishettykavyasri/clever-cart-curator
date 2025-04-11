@@ -93,7 +93,7 @@ const Navbar: React.FC = () => {
               <div className="hidden md:flex items-center space-x-4">
                 <div className="flex items-center">
                   <User size={18} className="text-gray-700 mr-2" />
-                  <span className="text-sm text-gray-700">{userEmail}</span>
+                  <span className="text-sm text-gray-700 font-semibold">Hi, {userEmail.split('@')[0]}</span>
                 </div>
                 <Button 
                   variant="outline" 
@@ -172,7 +172,7 @@ const Navbar: React.FC = () => {
                 <>
                   <div className="flex items-center py-2">
                     <User size={18} className="text-gray-700 mr-2" />
-                    <span className="text-sm text-gray-700">{userEmail}</span>
+                    <span className="text-sm text-gray-700 font-semibold">Hi, {userEmail.split('@')[0]}</span>
                   </div>
                   <Button 
                     variant="outline" 

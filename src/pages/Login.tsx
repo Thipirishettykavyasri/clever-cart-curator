@@ -19,17 +19,16 @@ const Login = () => {
     e.preventDefault();
     setIsLoading(true);
     
-    // Simulate authentication
+    // Allow any user to login as long as both fields are filled
     setTimeout(() => {
       setIsLoading(false);
       
-      // Demo credentials: user@example.com / password123
-      if (email === 'user@example.com' && password === 'password123') {
+      if (email && password) {
         toast({
           title: "Login successful",
-          description: "Welcome back to SmartShop!",
+          description: `Welcome ${email}!`,
         });
-        // Store some user info in localStorage
+        // Store user info in localStorage
         localStorage.setItem('isLoggedIn', 'true');
         localStorage.setItem('userEmail', email);
         navigate('/');
@@ -37,7 +36,7 @@ const Login = () => {
         toast({
           variant: "destructive",
           title: "Login failed",
-          description: "Invalid email or password.",
+          description: "Please enter both email and password.",
         });
       }
     }, 1000);

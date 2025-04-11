@@ -12,6 +12,7 @@ import { useToast } from '@/components/ui/use-toast';
 const Account = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userEmail, setUserEmail] = useState('');
+  const [userName, setUserName] = useState('');
   const [orders, setOrders] = useState<any[]>([]);
   const [wishlist, setWishlist] = useState<any[]>([]);
   
@@ -24,7 +25,9 @@ const Account = () => {
     setIsLoggedIn(loggedIn);
     
     if (loggedIn) {
-      setUserEmail(localStorage.getItem('userEmail') || '');
+      const email = localStorage.getItem('userEmail') || '';
+      setUserEmail(email);
+      setUserName(email.split('@')[0]);
       
       // Get wishlist from localStorage
       const storedWishlist = JSON.parse(localStorage.getItem('wishlistItems') || '[]');
@@ -101,7 +104,7 @@ const Account = () => {
                 <User size={24} />
               </div>
               <div>
-                <h1 className="text-2xl md:text-3xl font-bold">My Account</h1>
+                <h1 className="text-2xl md:text-3xl font-bold">Welcome, {userName}!</h1>
                 <p className="text-gray-600">{userEmail}</p>
               </div>
             </div>
