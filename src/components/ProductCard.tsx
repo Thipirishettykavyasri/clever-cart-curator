@@ -43,17 +43,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         quantity: 1
       });
       
-      // Show recommendations in a toast
-      sonnerToast(
-        "Added to cart",
-        `${name} has been added to your cart. Check out similar products!`,
-        {
-          action: {
-            label: "View Similar",
-            onClick: () => navigate(`/product/${id}`),
-          },
-        }
-      );
+      // Show recommendations in a toast - Fixed by removing the third argument
+      sonnerToast("Added to cart", `${name} has been added to your cart. Check out similar products!`, {
+        action: {
+          label: "View Similar",
+          onClick: () => navigate(`/product/${id}`),
+        },
+      });
     }
     
     // Save updated cart to localStorage
