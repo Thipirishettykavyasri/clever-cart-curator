@@ -43,8 +43,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         quantity: 1
       });
       
-      // Show recommendations in a toast - Fixed by removing the third argument
-      sonnerToast("Added to cart", `${name} has been added to your cart. Check out similar products!`, {
+      // Show recommendations in a toast - Fixed to match the expected argument format
+      sonnerToast("Added to cart", {
+        description: `${name} has been added to your cart. Check out similar products!`,
         action: {
           label: "View Similar",
           onClick: () => navigate(`/product/${id}`),
