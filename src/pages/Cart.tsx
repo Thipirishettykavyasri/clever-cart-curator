@@ -2,10 +2,18 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { Minus, Plus, Trash2 } from 'lucide-react';
+import { Minus, Plus, Trash2, CreditCard } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import { Link } from 'react-router-dom';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from "@/components/ui/sheet";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
 
 interface CartItem {
   id: number;
@@ -15,10 +23,36 @@ interface CartItem {
   quantity: number;
 }
 
+const paymentSchema = z.object({
+  paymentMethod: z.enum(["credit", "paypal", "applepay"]),
+  cardNumber: z.string().optional().refine(val => !val || /^\d{16}$/.test(val), {
+    message: "Card number must be 16 digits",
+  }),
+  expiryDate: z.string().optional().refine(val => !val || /^(0[1-9]|1[0-2])\/\d{2}$/.test(val), {
+    message: "Expiry date must be in MM/YY format",
+  }),
+  cvv: z.string().optional().refine(val => !val || /^\d{3,4}$/.test(val), {
+    message: "CVV must be 3 or 4 digits",
+  }),
+});
+
+type PaymentFormValues = z.infer<typeof paymentSchema>;
+
 const Cart = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [paymentSheetOpen, setPaymentSheetOpen] = useState(false);
   const { toast } = useToast();
+
+  const form = useForm<PaymentFormValues>({
+    resolver: zodResolver(paymentSchema),
+    defaultValues: {
+      paymentMethod: "credit",
+      cardNumber: "",
+      expiryDate: "",
+      cvv: "",
+    },
+  });
 
   useEffect(() => {
     // Load cart items from localStorage
@@ -69,10 +103,16 @@ const Cart = () => {
   };
 
   const handleCheckout = () => {
+    setPaymentSheetOpen(true);
+  };
+
+  const onSubmitPayment = (values: PaymentFormValues) => {
+    console.log("Payment values:", values);
     toast({
       title: "Order placed",
-      description: "Thank you for your order! This is a demo checkout.",
+      description: "Thank you for your order! Your payment has been processed.",
     });
+    setPaymentSheetOpen(false);
     clearCart();
   };
 
@@ -235,6 +275,107 @@ const Cart = () => {
       </main>
       
       <Footer />
+
+      {/* Payment Method Sheet */}
+      <Sheet open={paymentSheetOpen} onOpenChange={setPaymentSheetOpen}>
+        <SheetContent className="sm:max-w-md overflow-y-auto">
+          <SheetHeader>
+            <SheetTitle className="flex items-center gap-2">
+              <CreditCard className="h-5 w-5" />
+              Payment Method
+            </SheetTitle>
+          </SheetHeader>
+          
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmitPayment)} className="space-y-6 py-6">
+              <FormField
+                control={form.control}
+                name="paymentMethod"
+                render={({ field }) => (
+                  <FormItem className="space-y-3">
+                    <FormLabel>Payment Method</FormLabel>
+                    <FormControl>
+                      <RadioGroup
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                        className="flex flex-col space-y-3"
+                      >
+                        <div className="flex items-center space-x-3 border p-4 rounded-md hover:bg-slate-50">
+                          <RadioGroupItem value="credit" id="credit" />
+                          <Label htmlFor="credit" className="flex-1 cursor-pointer">Credit Card</Label>
+                        </div>
+                        <div className="flex items-center space-x-3 border p-4 rounded-md hover:bg-slate-50">
+                          <RadioGroupItem value="paypal" id="paypal" />
+                          <Label htmlFor="paypal" className="flex-1 cursor-pointer">PayPal</Label>
+                        </div>
+                        <div className="flex items-center space-x-3 border p-4 rounded-md hover:bg-slate-50">
+                          <RadioGroupItem value="applepay" id="applepay" />
+                          <Label htmlFor="applepay" className="flex-1 cursor-pointer">Apple Pay</Label>
+                        </div>
+                      </RadioGroup>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {form.watch("paymentMethod") === "credit" && (
+                <div className="space-y-4">
+                  <FormField
+                    control={form.control}
+                    name="cardNumber"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Card Number</FormLabel>
+                        <FormControl>
+                          <Input placeholder="0000 0000 0000 0000" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <div className="grid grid-cols-2 gap-4">
+                    <FormField
+                      control={form.control}
+                      name="expiryDate"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Expiry Date</FormLabel>
+                          <FormControl>
+                            <Input placeholder="MM/YY" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    
+                    <FormField
+                      control={form.control}
+                      name="cvv"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>CVV</FormLabel>
+                          <FormControl>
+                            <Input placeholder="000" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                </div>
+              )}
+              
+              <SheetFooter>
+                <Button type="submit" className="w-full">
+                  Pay ${(calculateTotal() * 1.1).toFixed(2)}
+                </Button>
+              </SheetFooter>
+            </form>
+          </Form>
+        </SheetContent>
+      </Sheet>
     </div>
   );
 };
